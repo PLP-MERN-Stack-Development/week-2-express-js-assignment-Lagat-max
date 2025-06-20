@@ -1,60 +1,74 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19743315&assignment_repo_type=AssignmentRepo)
-# Express.js RESTful API Assignment
+# Products API
 
-This assignment focuses on building a RESTful API using Express.js, implementing proper routing, middleware, and error handling.
+A RESTful API built with Express.js for managing products.
 
-## Assignment Overview
+## Setup
 
-You will:
-1. Set up an Express.js server
-2. Create RESTful API routes for a product resource
-3. Implement custom middleware for logging, authentication, and validation
-4. Add comprehensive error handling
-5. Develop advanced features like filtering, pagination, and search
-
-## Getting Started
-
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Install dependencies:
+1. Clone the repository
+2. Install dependencies:
    ```
    npm install
    ```
-4. Run the server:
+3. Copy `.env.example` to `.env` and set your API key
+4. Start the server:
    ```
    npm start
    ```
 
-## Files Included
-
-- `Week2-Assignment.md`: Detailed assignment instructions
-- `server.js`: Starter Express.js server file
-- `.env.example`: Example environment variables file
-
-## Requirements
-
-- Node.js (v18 or higher)
-- npm or yarn
-- Postman, Insomnia, or curl for API testing
+## Environment Variables
+- `API_KEY`: Your API key for authentication
+- `PORT`: Port to run the server (default: 3000)
+- `NODE_ENV`: Environment (development/production)
 
 ## API Endpoints
 
-The API will have the following endpoints:
+### Authentication
+All POST, PUT, DELETE requests require an `x-api-key` header.
 
-- `GET /api/products`: Get all products
-- `GET /api/products/:id`: Get a specific product
-- `POST /api/products`: Create a new product
-- `PUT /api/products/:id`: Update a product
-- `DELETE /api/products/:id`: Delete a product
+### Products
+- `GET /api/products` - List all products (supports `category`, `page`, `limit` query params)
+- `GET /api/products/:id` - Get a product by ID
+- `POST /api/products` - Create a new product
+- `PUT /api/products/:id` - Update a product
+- `DELETE /api/products/:id` - Delete a product
+- `GET /api/products/search?name=...` - Search products by name
+- `GET /api/products/stats` - Get product statistics by category
 
-## Submission
+#### Example: List Products
+```
+GET /api/products?category=electronics&page=1&limit=2
+```
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+#### Example: Create Product
+```
+POST /api/products
+Headers: { "x-api-key": "your_api_key_here" }
+Body:
+{
+  "name": "Tablet",
+  "description": "10-inch screen",
+  "price": 300,
+  "category": "electronics",
+  "inStock": true
+}
+```
 
-1. Complete all the required API endpoints
-2. Implement the middleware and error handling
-3. Document your API in the README.md
-4. Include examples of requests and responses
+#### Example: Error Response
+```
+{
+  "message": "Invalid product data. Check all required fields and types."
+}
+```
+
+## Error Handling
+- 400: Validation errors
+- 401: Unauthorized (missing/invalid API key)
+- 404: Not found
+- 500: Server errors
+
+## License
+MIT
 
 ## Resources
 
